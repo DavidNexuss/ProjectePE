@@ -1,0 +1,7 @@
+*.o
+*.so
+bin
+as
+main
+main-release
+main-debug
