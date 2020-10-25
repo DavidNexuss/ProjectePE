@@ -4,3 +4,4 @@ as
 main
 main-release
 main-debug
+bin/extract

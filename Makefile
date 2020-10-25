@@ -8,7 +8,7 @@ ODIR = obj
 IDIR = src
 SDIR = as
 
-all: $(IDIR) $(ODIR) $(OUT)
+all: $(IDIR) $(ODIR) $(OUT) bin/extract
 
 debug: OUT=bin/main-debug
 debug: CFLAGS +=-g
@@ -18,40 +18,13 @@ release: OUT=bin/main-release
 release: CFLAGS +=-O2
 release: all
 
-run: all
-	./$(OUT)
-$(ODIR):
-	mkdir $(ODIR)
-$(IDIR):
-	mkdir $(IDIR)
-$(SDIR):
-	mkdir $(SDIR)
-
-C_SOURCES = $(shell find $(IDIR) -type f -name *.cc -printf "%f\n")
-OBJECTS = $(patsubst %.cc, $(ODIR)/%.o,$(C_SOURCES))
-S_CODE = $(patsubst %.cc, $(SDIR)/%.s,$(C_SOURCES))
-
-$(ODIR)/%.o : $(IDIR)/%.cc
-	$(GCC) $(CFLAGS) -c $^ -o $@
-
-$(SDIR)/%.s : $(IDIR)/%.cc
-	$(GCC) -g -o $@ $(CFLAGS) -S $^
-
-$(ODIR)/%.o : $(IDIR)/**/%.cc
-	$(GCC) $(CFLAGS) -c $^ -o $@
-
-$(SDIR)/%.s : $(IDIR)/**/%.cc
-	$(GCC) -g -o $@ $(CFLAGS) -S $^
-
-
-$(OUT): $(OBJECTS)
-	$(GCC) $(LDFLAGS) -o $(OUT) $(OBJECTS)
-
-clean: $(ODIR)
-	rm -rf $(ODIR)
-	rm -rf $(SDIR)
-
-clean-dis: $(SDIR)
-	rm -rf $(SDIR)
-
-dis: all $(SDIR) $(S_CODE)
+bin/main: obj/main.o
+	g++ $(LDFLAGS) $^ -o $@
+obj/main.o: src/main.cc
+	g++ $(CFLAGS) -c $^ -o $@
+bin/extract: src/extract.cc
+	g++ -O2 $^ -o $@
+clean:
+	rm bin/main
+	rm bin/extract
+	rm obj/*.o
