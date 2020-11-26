@@ -1,7 +1,7 @@
 #!/bin/bash
 function parse()
 {
-    grep 'users forked' | sed 's/.*="//' | awk '{print $1}'
+    grep 'user' | grep 'forked' | sed 's/.*="//' | awk '{print $1}'
 }
 [ "$1" != "-" ] &&
 {
