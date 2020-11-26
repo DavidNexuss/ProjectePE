@@ -24,4 +24,4 @@ for d in $(seq $1 $2); do
         done
         wait
     done 
-done | grep -o '<a .*href=.*>' | sed -e 's/<a/\n<a/g' | sed -e 's/<a .*href=['"'"'"]//' -e 's/["'"'"'].*$//' -e '/^$/ d' | grep -o -P "https:\/\/github\.com\/(.+?)\/(.+?)\/" | grep -v "trending" | sort | uniq
+done | grep -o '<a .*href=.*>' | sed -e 's/<a/\n<a/g' | sed -e 's/<a .*href=['"'"'"]//' -e 's/["'"'"'].*$//' -e '/^$/ d' | grep -o -P "https:\/\/github\.com\/(.+?)\/(.+?)\/" | grep -v "trending" | sort | uniq | cut -c20- | rev | cut -c2- | rev
