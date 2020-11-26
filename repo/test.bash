@@ -47,7 +47,8 @@ function print_greet()
 function print_helper()
 {
     echo "Escull operació a executar: "
-    echo -e "\e[96m 1)\e[39m Obtindre metadades de un projecte en concret       [nomusuari/nomrepo]"
+    echo -e "\e[96m 1)\e[39m Obtindre metadades de un projecte en concret               [nomusuari/nomrepo]"
+    echo -e "\e[96m 2)\e[39m Obtindre llistat de forks de un projecte en concret        [nomusuari/nomrepo]"
 }
 
 [ "$1" != "-s" ] && 
@@ -59,6 +60,7 @@ while read -a input; do
 [ "$1" != "-s" ] && echo ""
 case "${input[0]}" in
     1) test_meta ${input[1]} ;;
+    2) ./getforks.bash ${input[1]} ;;
     *) echo "Operació ${input[0]} no reconeguda" 
        exit 1;;
 esac
