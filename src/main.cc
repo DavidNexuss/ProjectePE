@@ -26,5 +26,6 @@ int main()
 
     cout << readBuffer << endl;
   }
+
   return 0;
 }

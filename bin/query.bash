@@ -20,7 +20,7 @@ trap ctrl_c INT
 for d in $(seq $1 $2); do
     for i in $(seq -f "%02g" 12); do
         for j in $(seq -f "%02g" 30); do
-            curl -sL https://web.archive.org/web/"$d$i$j"001920/https://github.com/trending & 
+            lynx -dump -listonly https://web.archive.org/web/"$d$i$j"001920/https://github.com/trending
         done
         wait
     done 
