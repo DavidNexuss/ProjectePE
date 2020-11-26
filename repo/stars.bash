@@ -1,7 +1,7 @@
 #!/bin/bash
 function parse()
 {
-    grep 'users starred' | sed 's/.*="//' | awk '{print $1}'
+    grep 'user' | grep 'starred' | sed 's/.*="//' | awk '{print $1}'
 }
 [ "$1" != "-" ] &&
 {

@@ -5,13 +5,26 @@ function test_meta()
     curl -Ls "https://github.com/$1" > "$f"
     (
     echo -e "Cantitat de commits: | \e[32m $(cat "$f" | ./commits.bash -) \e[39m"
+
+    last_commit=$(cat "$f" | ./lastcommit.bash -)
     echo -e "Ultim commit: | \e[32m $(cat "$f" | ./lastcommit.bash -) \e[39m"
+
     first_commit=$(./firstcommit.bash "$1" "$f")
     echo -e "Primer commit: | \e[32m $first_commit \e[39m"
-    echo -e "Data inici: | \e[32m $(./commitdate.bash "$first_commit")\e[39m"
+
+    data_inici=$(./commitdate.bash "$first_commit")
+    data_fi=$(./commitdate.bash "https://github.com/$1/commits/master")
+    temps=$(( $(date -d "$data_fi" +%s) - $(date -d "$data_inici" +%s) ))
+    temps=$((temps / 86400))
+    echo -e "Data inici: | \e[32m $data_inici\e[39m"
+    echo -e "Data Fi: | \e[32m $data_fi\e[39m"
+    echo -e "Temps: | \e[32m $temps \e[39m"
+
     echo -e "Stars: | \e[32m $(cat "$f" | ./stars.bash -) \e[39m"
     echo -e "Forks: | \e[32m $(cat "$f" | ./forks.bash -) \e[39m"
     ) | column -t -s "|"
+
+    rm $f
 }
 
 function print_greet()
