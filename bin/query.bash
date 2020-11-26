@@ -24,5 +24,4 @@ for d in $(seq $1 $2); do
         done
         wait
     done 
-done | ./extract | grep -Ev 'features|trending|sponsors|apps|about|site|explore|mail'
-#| grep 'muted-link d-inline-block mr-3'  | awk '{print $6}'
+done | grep -o '<a .*href=.*>' | sed -e 's/<a/\n<a/g' | sed -e 's/<a .*href=['"'"'"]//' -e 's/["'"'"'].*$//' -e '/^$/ d' | grep -o -P "https:\/\/github\.com\/(.+?)\/(.+?)\/" | grep -v "trending" | sort | uniq
