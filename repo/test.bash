@@ -3,13 +3,14 @@ function test_meta()
 {
     f=$(mktemp)
     curl -Ls "https://github.com/$1" > "$f"
-    echo ""
     (
     echo -e "Cantitat de commits: | \e[32m $(cat "$f" | ./commits.bash -) \e[39m"
     echo -e "Ultim commit: | \e[32m $(cat "$f" | ./lastcommit.bash -) \e[39m"
     first_commit=$(./firstcommit.bash "$1" "$f")
     echo -e "Primer commit: | \e[32m $first_commit \e[39m"
     echo -e "Data inici: | \e[32m $(./commitdate.bash "$first_commit")\e[39m"
+    echo -e "Stars: | \e[32m $(cat "$f" | ./stars.bash -) \e[39m"
+    echo -e "Forks: | \e[32m $(cat "$f" | ./forks.bash -) \e[39m"
     ) | column -t -s "|"
 }
 
@@ -38,7 +39,7 @@ function print_helper()
     print_helper
 }
 while read -a input; do 
-
+[ "$1" != "-s" ] && echo ""
 case "${input[0]}" in
     1) test_meta ${input[1]} ;;
     *) echo "Operació ${input[0]} no reconeguda" 
