@@ -15,6 +15,7 @@ function test_meta()
         temps=$(( $(date -d "$data_fi" +%s) - $(date -d "$data_inici" +%s) ))
         temps=$((temps / 86400))
 
+
         echo -e "Cantitat de commits: | \e[32m $commit_count \e[39m"
         echo -e "Ultim commit: | \e[32m $last_commit \e[39m"
         echo -e "Primer commit: | \e[32m $first_commit \e[39m"
@@ -23,9 +24,16 @@ function test_meta()
         echo -e "Data Fi: | \e[32m $data_fi\e[39m"
         echo -e "Temps: | \e[32m $temps \e[39m"
 
-        echo -e "Stars: | \e[32m $(cat "$f" | ./stars.bash -) \e[39m"
+        stars=$(cat "$f" | ./stars.bash -)
+        echo -e "Stars: | \e[32m $stars \e[39m"
         echo -e "Forks: | \e[32m $(cat "$f" | ./forks.bash -) \e[39m"
 
+        f2=$(mktemp)
+        echo "$stars" > a
+        ./forksstars.bash $1 >> a
+        echo -ne "Es fragmentat?    "
+        cat a | ./fragmentat
+        rm $f2
     ) | column -t -s "|"
 
     rm $f
@@ -47,8 +55,9 @@ function print_greet()
 function print_helper()
 {
     echo "Escull operació a executar: "
-    echo -e "\e[96m 1)\e[39m Obtindre metadades de un projecte en concret               [nomusuari/nomrepo]"
-    echo -e "\e[96m 2)\e[39m Obtindre llistat de forks de un projecte en concret        [nomusuari/nomrepo]"
+    echo -e "\e[96m 1)\e[39m Obtindre metadades de un projecte en concret               "
+    echo -e "\e[96m 2)\e[39m Obtindre llistat de forks de un projecte en concret        "
+    echo -e "\e[96m 3)\e[39m Obtindre llistat de forks de un projecte en concret (ordenat per popularitat)       "
 }
 
 [ "$1" != "-s" ] && 
@@ -61,6 +70,7 @@ while read -a input; do
 case "${input[0]}" in
     1) test_meta ${input[1]} ;;
     2) ./getforks.bash ${input[1]} ;;
+    3) ./forksstars.bash ${input[1]} ;;
     *) echo "Operació ${input[0]} no reconeguda" 
        exit 1;;
 esac
