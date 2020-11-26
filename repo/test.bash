@@ -38,6 +38,33 @@ function test_meta()
 
     rm $f
 }
+function meta()
+{
+    f=$(mktemp)
+    curl -Ls "https://github.com/$1" > "$f"
+
+    commit_count=$(cat "$f" | ./commits.bash -)
+    last_commit=$(cat "$f" | ./lastcommit.bash -)
+    first_commit=$(./firstcommit.bash "$1" "$last_commit" "$commit_count")
+
+
+    data_inici=$(./commitdate.bash "$first_commit")
+    data_fi=$(./commitdate.bash "https://github.com/$1/commits")
+    temps=$(( $(date -d "$data_fi" +%s) - $(date -d "$data_inici" +%s) ))
+    temps=$((temps / 86400))
+
+    stars=$(cat "$f" | ./stars.bash -)
+
+
+    f2=$(mktemp)
+    echo "$stars" > a
+    ./forksstars.bash $1 >> a
+    valor=$(cat a | ./fragmentat)
+    rm $f2
+
+    echo "$stars $temps $valor"
+    rm $f
+}
 
 function print_greet()
 {
@@ -58,6 +85,7 @@ function print_helper()
     echo -e "\e[96m 1)\e[39m Obtindre metadades de un projecte en concret               "
     echo -e "\e[96m 2)\e[39m Obtindre llistat de forks de un projecte en concret        "
     echo -e "\e[96m 3)\e[39m Obtindre llistat de forks de un projecte en concret (ordenat per popularitat)       "
+    echo -e "\e[96m 4)\e[39m Obtindre dades       "
 }
 
 [ "$1" != "-s" ] && 
@@ -71,6 +99,10 @@ case "${input[0]}" in
     1) test_meta ${input[1]} ;;
     2) ./getforks.bash ${input[1]} ;;
     3) ./forksstars.bash ${input[1]} ;;
+    4) export -f meta
+        while read line; do
+            meta $line
+        done;;
     *) echo "Operació ${input[0]} no reconeguda" 
        exit 1;;
 esac

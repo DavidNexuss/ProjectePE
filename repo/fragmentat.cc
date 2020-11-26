@@ -18,5 +18,5 @@ int main()
         total_stars += stars;
         total++;
     }
-    cout << target << " " << total_stars << " " << (float(total_stars)/float(target)) << endl;
+    cout << (float(total_stars)/float(target)) << endl;
 }
