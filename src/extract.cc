@@ -2,13 +2,13 @@
 using namespace std;
 
 /*
- * Utilitat que extrau urls de repositoris de github de un text rebut per stdin
- * Llegeix linea a linea, filtran amb les següents operacions
+ * Utilitat que extrau urls de repositoris de github d'un text rebut per stdin
+ * Llegeix línia a línia, filtrant amb les següents operacions:
  *
- * 1) Nomes les que tenen github.com/
- * 2) Esborra tot el text fins el caracter " i nomes imprimeix en cas de que la url tingui dues '/', el format de les urls de repos
+ * 1) Només les que tenen github.com/
+ * 2) Esborra tot el text fins el caràcter " i només imprimeix en cas que la url tingui dues '/', el format de les urls de repos
  *
- * No garanteix que la url sigui un repo nomes que aquesta cumpleix el format
+ * No garanteix que la url sigui un repo només que aquesta compleix el format
  */
 
 bool valid(char c)

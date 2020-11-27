@@ -5,3 +5,4 @@ main
 main-release
 main-debug
 bin/extract
+.DS_Store
