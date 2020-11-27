@@ -1,4 +1,10 @@
 #!/bin/bash
+
+# Script que obté les metadades en format de text pla
+# L'Script assumeix que el repositori existeix i es accesible
+# Input [repo]
+# Output stars temps valor
+
 f=$(mktemp)
 curl -Ls "https://github.com/$1" > "$f"
 

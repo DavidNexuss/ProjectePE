@@ -4,5 +4,7 @@ as
 main
 main-release
 main-debug
-bin/extract
+extract
+fragmentat
 .DS_Store
+
