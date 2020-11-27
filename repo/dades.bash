@@ -16,9 +16,9 @@ stars=$(cat "$f" | ./stars.bash -)
 
 
 f2=$(mktemp)
-echo "$stars" > a
-./forksstars.bash $1 >> a
-valor=$(cat a | ./fragmentat)
+echo "$stars" > $f2
+./forksstars.bash $1 >> $f2
+valor=$(cat "$f2" | ./fragmentat)
 rm $f2
 
 echo "$stars $temps $valor"
