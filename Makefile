@@ -8,5 +8,7 @@ BIN= extract fragmentat clear
 	g++ -O2 $^ -o $@
 
 all: $(BIN)
+run: all
+	./test.bash <<< "4"
 clean:
 	rm $(BIN)
