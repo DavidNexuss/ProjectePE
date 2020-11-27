@@ -2,7 +2,7 @@ GCC = g++
 CFLAGS = -I include/
 LDFLAGS = -lcurl
 
-BIN=extract fragmentat
+BIN= extract fragmentat clear
 
 %: src/%.cc
 	g++ -O2 $^ -o $@
