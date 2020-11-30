@@ -72,7 +72,7 @@ case "${input[0]}" in
     1) test_meta ${input[1]} ;;
     2) ./getforks.bash ${input[1]} ;;
     3) ./forksstars.bash ${input[1]} ;;
-    4) xargs -n 1 -P 3 ./dades.bash < repos_cut.txt;;
+    4) xargs -n 1 -P 3 ./dades.bash < repos_cut.txt > dades_finals.txt;;
     *) echo "Operació ${input[0]} no reconeguda" 
        exit 1;;
 esac

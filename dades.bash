@@ -27,5 +27,5 @@ echo "$stars" > $f2
 valor=$(cat "$f2" | ./fragmentat)
 rm $f2
 
-echo "$stars $temps $valor"
+echo "$1 $stars $temps $valor"
 rm $f
